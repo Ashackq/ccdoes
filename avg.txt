@@ -1,0 +1,30 @@
+#include  <stdio.h>
+
+void main()
+{
+   float m1,m2,m3,m4,m5;
+   float mavg;
+   char a[10];
+
+   printf("Enter name of student : ");
+   scanf("%s",&a);
+   
+   printf("PLEASE ENTER MARKS IN SUBJECT 1 :");
+   scanf("%f",&m1);
+   printf("PLEASE ENTER MARKS IN SUBJECT 2 :");
+   scanf("%f",&m2);
+   printf("PLEASE ENTER MARKS IN SUBJECT 3 :");
+   scanf("%f",&m3);
+   printf("PLEASE ENTER MARKS IN SUBJECT 4 :");
+   scanf("%f",&m4);
+   m5= m1+m2+m3+m4;
+   mavg=m5/4;
+   printf("STUDENT NAME :%s \n" , &a);
+   printf("Marks in subject 1: %f \n",m1);
+   printf("Marks in subject 2: %f \n",m2);
+   printf("Marks in subject 3: %f \n",m3);
+   
+   printf("Marks in subject 4: %f \n",m4);
+   printf("Marks in total: %f \n",m5);
+   printf("Marks average: %f \n",mavg);
+}
