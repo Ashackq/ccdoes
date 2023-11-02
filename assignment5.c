@@ -18,6 +18,7 @@ struct Node* createNode(int data) {
 }
 
 struct Node* createLinkedList() {
+    printf("Creating New List...\n");
     struct Node* head = createNode(0);
     struct Node* current = head;
     int elements = 0;
@@ -132,7 +133,6 @@ void bubbleSortLinkedList(struct Node* head) {
 }
 
 void freeLinkedList(struct Node* head) {
-    printf("Freeing Linked List...\n");
     struct Node* current = head;
     while (current != NULL) {
         struct Node* temp = current;
@@ -143,13 +143,62 @@ void freeLinkedList(struct Node* head) {
     
 }
 
+void reverseLinkedList(struct Node* head) {
+    struct Node* prev = NULL;
+    struct Node* current = head->next;
+    struct Node* next;
+
+    while (current != NULL) {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+    head->next = prev;
+}
+
+struct Node* mergeSortedLists(struct Node* list1, struct Node* list2) {
+    bubbleSortLinkedList(list1);
+    bubbleSortLinkedList(list2);
+    struct Node* mergedList = createNode(0);
+    struct Node* current = mergedList;
+    struct Node* p1 = list1->next;
+    struct Node* p2 = list2->next;
+
+    while (p1 != NULL && p2 != NULL) {
+        if (p1->data < p2->data) {
+            current->next = createNode(p1->data);
+            p1 = p1->next;
+        } else {
+            current->next = createNode(p2->data);
+            p2 = p2->next;
+        }
+        current = current->next;
+    }
+
+    while (p1 != NULL) {
+        current->next = createNode(p1->data);
+        p1 = p1->next;
+        current = current->next;
+    }
+
+    while (p2 != NULL) {
+        current->next = createNode(p2->data);
+        p2 = p2->next;
+        current = current->next;
+    }
+
+    return mergedList;
+}
+
 int main() {
     struct Node* head = createLinkedList();
+    struct Node* mergedList = NULL;
     int pos=0;
     displayLinkedList(head);
     int cho=0;
     do{
-    printf("\nEnter \n1. To Insert Element \n2. To Delete Element \n3. To Sort the List \n4. To EXIT\n");
+    printf("\nEnter \n1. To Insert Element \n2. To Delete Element \n3. To Sort the List\n4. To Reverse the List\n5. To Merge the Lists \n6. To EXIT\n");
     scanf("%d",&cho);
     switch (cho) {
         case 1:
@@ -169,18 +218,33 @@ int main() {
             printf("Sorted list:\n");
             displayLinkedList(head);
             break;
-        case 5: 
+        case 6: 
+            printf("Freeing all the lists....\n");
             freeLinkedList(head);
+            freeLinkedList(mergedList);
             printf("Exiting program.\n");
             break;
         case 4: 
-            
+            reverseLinkedList(head);
             printf("Reversed List.\n");
             displayLinkedList(head);
             break;
+        case 5: 
+            struct Node* list1 = createLinkedList();
+            struct Node* list2 = createLinkedList();
+            displayLinkedList(list1);
+            displayLinkedList(list2);
+            mergedList = mergeSortedLists(list1, list2);
+            printf("Merged sorted list:\n");
+            displayLinkedList(mergedList);
+            break;
+            reverseLinkedList(head);
+            printf("Reversed List.\n");
+            displayLinkedList(head);
+            break;    
         default:
             printf("Invalid choice. Please enter a valid option.\n");
         }
-    } while (cho != 4);
+    } while (cho != 6);
     return 0;
 }
