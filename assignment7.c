@@ -21,7 +21,7 @@ char* push(const char* item) {
         printf("Stack is full. Cannot push %s.\n", item);
         return NULL;
     } else {
-        char* newItem = strdup(item);
+        char* newItem = item;
         strcpy(stack[++top], newItem);
         printf("Pushed %s onto the stack.\n", item);
         return newItem;
@@ -33,7 +33,7 @@ char* pop() {
         printf("Stack is empty. Cannot pop.\n");
         return NULL;
     } else {
-        char* poppedItem = strdup(stack[top]);
+        char* poppedItem = stack[top];
         top--;
         return poppedItem;
     }
@@ -50,14 +50,13 @@ void postfixToInfix(const char* postfix ) {
             char* operand1 = pop();
             sprintf(infix, "(%s%c%s)", operand1, postfix[i], operand2);
             push(infix);
-            free(operand1);
-            free(operand2);
+            
         }
     }
     char* result = pop();
     printf("Infix expression:\n");
     printf("%s", result);
-    free(result);
+    
 }
 
 int main() {
