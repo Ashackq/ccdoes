@@ -16,45 +16,54 @@ bool isFull() {
     return top == MAX_SIZE - 1;
 }
 
-void push(const char* item) {
+char* push(const char* item) {
     if (isFull()) {
         printf("Stack is full. Cannot push %s.\n", item);
+        return NULL;
     } else {
-        strcpy(stack[++top], item);
+        char* newItem = strdup(item);
+        strcpy(stack[++top], newItem);
         printf("Pushed %s onto the stack.\n", item);
+        return newItem;
     }
 }
 
-void pop(char* item) {
+char* pop() {
     if (isEmpty()) {
         printf("Stack is empty. Cannot pop.\n");
+        return NULL;
     } else {
-        strcpy(item, stack[top--]);
+        char* poppedItem = strdup(stack[top]);
+        top--;
+        return poppedItem;
     }
 }
- 
-void postfixToInfix(const char* postfix, char* infix) {
+
+void postfixToInfix(const char* postfix ) {
+    char infix[MAX_SIZE];
     for (int i = 0; postfix[i]; i++) {
         if (isalpha(postfix[i])) {
             char operand[2] = { postfix[i], '\0' };
             push(operand);
         } else {
-            char operand2[MAX_SIZE], operand1[MAX_SIZE];
-            pop(operand2);
-            pop(operand1);
+            char* operand2 = pop();
+            char* operand1 = pop();
             sprintf(infix, "(%s%c%s)", operand1, postfix[i], operand2);
             push(infix);
+            free(operand1);
+            free(operand2);
         }
     }
+    char* result = pop();
+    printf("Infix expression:\n");
+    printf("%s", result);
+    free(result);
 }
 
 int main() {
-    char postfix[MAX_SIZE], infix[MAX_SIZE];
+    char postfix[MAX_SIZE];
     printf("Enter a postfix expression: ");
     scanf("%s", postfix);
-
-    postfixToInfix(postfix, infix);
-    printf("Infix expression: %s\n", infix);
-
+    postfixToInfix(postfix);
     return 0;
 }
