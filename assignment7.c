@@ -32,8 +32,7 @@ void pop(char* item) {
         strcpy(item, stack[top--]);
     }
 }
-
-// Function to convert postfix expression to infix expression
+ 
 void postfixToInfix(const char* postfix, char* infix) {
     for (int i = 0; postfix[i]; i++) {
         if (isalpha(postfix[i])) {
