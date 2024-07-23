@@ -13,7 +13,7 @@ int main() {
     printf("Pipe cannot be created\n");
     return 1;
   }
-
+  
   int pid = fork();
 
   if (pid < 0) {

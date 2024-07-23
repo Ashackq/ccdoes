@@ -46,8 +46,6 @@ int isSafe() {
         work[i] = available[i];
     }
 
- 
-
     //safe state check
     int count = 0;
     while (count < NUM_PROCESSES) {
@@ -87,7 +85,7 @@ int isSafe() {
     printf("Safe sqeuence is - ");
     for (int i = 0; i < NUM_PROCESSES; i++) {
         	
-        	if (i==(NUM_PROCESSES-1)){
+        	if (i==(NUM_PROCESSES-2)){
         		printf("P%d",safeseq[i]);
         	}else{
         		printf("P%d->",safeseq[i]);
@@ -124,17 +122,16 @@ int main() {
         }
         printf("\n");
     }
-    int cho =0;
-	printf("\nEnter 1 to continue to request and 0 to stop :\n");
-	scanf("%d", &cho);
+    int cho =1;
     while(cho == 1){
+        printf("\nEnter 1 to continue to request and 0 to stop :\n");
+	    scanf("%d", &cho);
 	    printf("\nEnter the process that is requesting resources :\nP");
 	    scanf("%d", &process);
 	    printf("Enter the resources requested (1 0 2):\n");
 	    for (int i = 0; i < NUM_RESOURCES; i++) {
 		scanf("%d", &request[i]);
-	    }
-	    
+	  }
 	    if (reqacc(process,request)){
 		    if (isSafe() == 1) {
 			printf("Request can be granted. System is in a safe state.\n");
@@ -151,8 +148,7 @@ int main() {
 	    else{
 	    	printf("Request cannot be granted. Due to above reason\n");
 	    }
-	printf("\nEnter 1 to continue to request and 0 to stop :\n");
-	scanf("%d", &cho);
+	
     }
 
     return 0;
